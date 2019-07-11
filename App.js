@@ -1,19 +1,20 @@
 import React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
+import {createStackNavigator, createAppContainer} from 'react-navigation';
+import Home from './screens/Home';
+import PokeList from './components/PokeList';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+const appNavigation = createStackNavigator({
+  Home:{
+    screen:Home,
+    navigationOptions:{
+      // header:null
+    }
   },
+  PokeList:{
+    screen:PokeList
+  }
 });
+
+export default createAppContainer(appNavigation);
