@@ -7,6 +7,7 @@ import {
   Text,
   ActivityIndicator
 } from "react-native";
+import PokeDetail from "../components/PokeDetail";
 
 let imgUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/`;
 
@@ -35,35 +36,42 @@ class PokeInfo extends React.Component{
     render(){
         const length = Object.keys(this.state.data).length;
         if(length>0){
-            console.log(`${imgUrl}+${this.state.pokemonImg}.png`);
+            let typess= this.state.data.types.map(function (obj, index) {
+                                return (
+                                  <React.Fragment key={index}>
+                                    <View 
+                                    style={{   
+                                      backgroundColor:'red',
+                                      borderRadius:5,
+                                      borderColor:'black',
+                                      margin:5,
+                                      paddingLeft:10,
+                                      paddingRight:10,
+                                      paddingBottom:3,
+                                      paddingTop:3,
+                                      borderWidth: 2,
+                                      justifyContent:'center',
+                                      alignItems:'center'}}>
+                                        <Text>{obj.type.name}</Text>
+                                    </View>
+                                  </React.Fragment >
+                                )
+                            });
             return (
-                <View>
-                    <Image source={{ uri: `${imgUrl}${this.state.pokemonImg}.png`}} style={{height:100,width:100}} />
-                    <Text>Weight = {this.state.data.weight}</Text>
-                    <Text>height = {this.state.data.height}</Text>
-                    <Text>{this.state.data.name}</Text>
-                    <Text>{
-                            this.state.data.types.map(function (obj) {
-                                let name = obj.type.name;
-                                return `${name}/`;
-                            })
-                        }
-                    </Text>
-                    <View>
-                        <FlatList
-                        data={this.state.data.moves}
-                        keyExtractor={item => item.move.name}
-                        renderItem={data => <Text>{data.item.move.name}</Text>}
-                        ></FlatList>
-                    </View>
-              </View>
+                <PokeDetail number={this.state.pokemonImg}
+                            name={this.state.data.name} 
+                            types={typess} 
+                            imgUrl={`${imgUrl}${this.state.pokemonImg}.png`} 
+                            height={this.state.data.height} 
+                            weight={this.state.data.weight} 
+                            moves={this.state.data.moves}>
+                </PokeDetail>
             )   
         }
         else{
-            // console.log('3', this.state.data.length);
             return (
                 <View>
-                <Text>Wait for it</Text>
+                <Text>Wait for it...</Text>
               </View>
             )
         }
