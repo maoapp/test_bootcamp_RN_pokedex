@@ -41,18 +41,23 @@ class PokeInfo extends React.Component{
                                   <React.Fragment key={index}>
                                     <View 
                                     style={{   
-                                      backgroundColor:'red',
+                                      backgroundColor:'#7c97c2',
                                       borderRadius:5,
-                                      borderColor:'black',
+                                      borderColor:'#435f8c',
                                       margin:5,
                                       paddingLeft:10,
                                       paddingRight:10,
-                                      paddingBottom:3,
-                                      paddingTop:3,
+                                      paddingBottom:0,
+                                      paddingTop:0,
                                       borderWidth: 2,
                                       justifyContent:'center',
+                                      height:25,
                                       alignItems:'center'}}>
-                                        <Text>{obj.type.name}</Text>
+                                        <Text 
+                                        style={{alignSelf: 'center',
+                                                justifyContent:'center',}}>
+                                                {obj.type.name}
+                                        </Text>
                                     </View>
                                   </React.Fragment >
                                 )

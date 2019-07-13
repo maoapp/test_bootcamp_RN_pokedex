@@ -27,18 +27,18 @@ const PokeDetail = ({number,name,types,imgUrl,height,weight,moves})=>{
            
             <View style={styles.pokeStatistics}>
                 <View style={styles.pokeItem} >
-                    <Text>N. {number}</Text>
+                    <Text style={styles.pokeText}>N. {number}</Text>
                 </View>
                 <View style={styles.pokeItem}>  
-                    <Text>Height : {height}</Text>
+                    <Text style={styles.pokeText}>Height : {height}</Text>
                 </View>
                 <View style={styles.pokeItem}>  
-                    <Text>Weight : {weight}</Text>
+                    <Text style={styles.pokeText}>Weight : {weight}</Text>
                 </View>
             </View>
             <View style={styles.pokeMoves}>
                 <View style={styles.pokeMovesTitle}>
-                    <Text>Moves</Text>
+                    <Text style={styles.pokeText}>Moves</Text>
                 </View>
                 <View style={styles.pokeItem2}>
                 <FlatList
@@ -59,7 +59,7 @@ const styles = StyleSheet.create({
         flex: 1,
         alignSelf: 'stretch',
         flexGrow: 1,
-        backgroundColor:'gray',
+        backgroundColor:'#fff',
     },
     imgContainer:{
           justifyContent: 'space-evenly',
@@ -68,7 +68,7 @@ const styles = StyleSheet.create({
           alignItems:'center',
           width: imgContainerHeight,
           height:imgContainerHeight,
-          backgroundColor:'white',
+          backgroundColor:'#eee',
           borderRadius:imgContainerHeight,
           marginTop:5
     },
@@ -76,32 +76,38 @@ const styles = StyleSheet.create({
         alignSelf: 'stretch',
         flexDirection:'row',
         justifyContent:'space-between',
-        height:pokeStatisticsHeight,
+        height:30,
+        backgroundColor:'#435f8c',
     },
     pokeStatistics2:{
         alignSelf: 'stretch',
+        alignItems:'center',
         flexDirection:'row',
         justifyContent:'space-between',
         height:35,
+        marginTop:5,
+        borderColor:'#7c97c2',
+        borderBottomWidth:1,
+        borderTopWidth:1
     },
     pokeMoves:{
         alignSelf: 'stretch',
-        backgroundColor:'purple',
+        backgroundColor:'#7c97c2',
         padding:5,
-        margin:5,
         flex:1
     },
     pokeTypes:{
         alignSelf: 'center',
         flexDirection:'row',
         justifyContent:'space-evenly',
-        alignItems:'stretch',
+        alignItems:'center',
         height:50,
     },
     pokeItem:{
         margin:5,
         fontSize:20,
-        alignSelf:'stretch'
+        alignSelf:'stretch',
+        
     },
     pokeItem2:{
         flex: 1,
@@ -116,8 +122,12 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         justifyContent:'center',
         fontSize:25,
-        margin:5
+        margin:5,
+        color:'#7c97c2'
     },
+    pokeText:{
+        color:'#fff'
+    }
 });
 
 export default PokeDetail;
