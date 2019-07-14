@@ -63,13 +63,13 @@ class PokeInfo extends React.Component{
                                     style={{   
                                       backgroundColor:`#${TYPES_COLORS[obj.type.name]}`,
                                       borderRadius:5,
-                                      borderColor:'#435f8c',
                                       margin:5,
                                       paddingLeft:10,
                                       paddingRight:10,
                                       paddingBottom:0,
                                       paddingTop:0,
-                                      borderWidth: 2,
+                                      borderWidth: 0,
+                                      color:'#fff',
                                       justifyContent:'center',
                                       height:25,
                                       alignItems:'center'}}>

@@ -33,14 +33,14 @@ class App extends Component {
           <Scene key='root'>
             <Scene
               component={Authentication}
-              hideNavBar={true}
+              hideNavBar={false}
               initial={true}
               key='Authentication'
               title='Authentication'
             />
             <Scene
               component={Home}
-              hideNavBar={true}
+              hideNavBar={false}
               key='Home'
               title='Home Page'
             />

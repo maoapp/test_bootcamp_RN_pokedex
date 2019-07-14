@@ -11,61 +11,51 @@ class Authentication extends Component {
     this.state = { username: null, password: null };
   }
 
-  userSignup() {
-    if (!this.state.username || !this.state.password) return;
-    console.log(this.state.username)
-    console.log(this.state.password)
-
-    AsyncStorage.multiSet([
-        ["username", this.state.username],
-        ["password", this.state.password]
-    ])
-    // fetch('http://192.168.XXX.XXX:3001/users', {
-    //   method: 'POST',
-    //   headers: { 'Accept': 'application/json', 'Content-Type': 'application/json' },
-    //   body: JSON.stringify({
-    //     username: this.state.username,
-    //     password: this.state.password,
-    //   })
-    // })
-    // .then((response) => response.json())
-    // .then((responseData) => {
-    //   this.saveItem('id_token', responseData.id_token),
-    //   Alert.alert( 'Signup Success!', 'Click the button to get a Chuck Norris quote!'),
-    //   Actions.HomePage();
-    // })
-    // .done();
-  }
-
-  userLogin() {
-    AsyncStorage.multiGet(['username', 'password']).then((data) => {
-        console.log('login',data);
-    });
-
-    Actions.Home();
-  }
-
-  async saveItem(item, selectedValue) {
-    try {
-      await AsyncStorage.setItem(item, selectedValue);
-    } catch (error) {
-      console.error('AsyncStorage error: ' + error.message);
+    userSignup() {
+        if (!this.state.username || !this.state.password) return;
+        AsyncStorage.setItem(this.state.username, JSON.stringify({user:this.state.username,password:this.state.password}));
     }
+
+   userLogin() {
+
+    if (!this.state.username || !this.state.password) return;
+
+     AsyncStorage.getItem(this.state.username).then(
+        (response) => response
+      ).then((res) => {
+        validLogin = res;
+        console.log(validLogin);
+        if(validLogin!=null){
+            Actions.Home();
+        }
+        return res;
+      }).catch((error) => {
+        console.error(error);
+      }).done();
   }
 
   render() {
     return (
-      <View >
-        <Text > Welcome </Text>
+      <View style={{flex:1}}>
+        <Text style={{fontSize:25,textAlign:'center'}}> Welcome to my Pokedex App</Text>
 
-        <View >
+        <View style={{
+          flex: 1,
+          flexGrow: 5,
+          flexDirection:'column',
+          alignItems:'stretch',
+          alignSelf:'center',
+          justifyContent:'center',
+          width:250
+        }}>
+            <Text style={{fontSize:35,textAlign:'center',margin:15}}> LOGIN</Text>
           <TextInput
             editable={true}
             onChangeText={(username) => this.setState({username})}
             placeholder='Username'
             ref='username'
             returnKeyType='next'
-            // style={styles.inputText}
+            style={{margin:5,padding:5,borderWidth:1,textAlign:'center'}}
             value={this.state.username}
           />
 
@@ -76,16 +66,16 @@ class Authentication extends Component {
             ref='password'
             returnKeyType='next'
             secureTextEntry={true}
-            // style={styles.inputText}
+            style={{margin:5,padding:5,borderWidth:1,textAlign:'center'}}
             value={this.state.password}
           />
 
-          <TouchableOpacity  onPress={this.userLogin.bind(this)}>
-            <Text > Log In </Text>
+          <TouchableOpacity style={{backgroundColor:'white',padding:5,margin:5}}  onPress={this.userLogin.bind(this)}>
+            <Text style={{textAlign:'center'}}> Log In </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity  onPress={this.userSignup.bind(this)}>
-            <Text > Sign Up </Text>
+          <TouchableOpacity style={{backgroundColor:'white',padding:5,margin:5}}  onPress={this.userSignup.bind(this)}>
+            <Text style={{textAlign:'center'}}> Sign Up </Text>
           </TouchableOpacity>
         </View>
       </View>
