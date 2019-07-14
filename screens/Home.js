@@ -20,18 +20,14 @@ class Home extends Component {
       <View style={styles.container}>
         <View style={[styles.container]}>
           <Button title="Open Pokedex" style={[styles.button]} onPress={() => Actions.PokeList()} />
+        </View>
+        <View style={[styles.container]}>
           <Button title="Log out" style={[styles.button]} onPress={this.userLogout} />
         </View>
       </View>
     );
   }
 }
-
-// const Home = ({ navigation }) => (
-//   <View style={[styles.container]}>
-//     <Button title="Pokedex" onPress={() => navigation.navigate("PokeList")} />
-//   </View>
-// );
 
 const styles = StyleSheet.create({
   container: {

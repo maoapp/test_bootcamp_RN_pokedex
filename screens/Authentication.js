@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, TextInput, TouchableOpacity, View, AsyncStorage} from 'react-native';
+import {Text, TextInput, TouchableOpacity, View, AsyncStorage, Alert} from 'react-native';
 import {Actions} from 'react-native-router-flux';
 import Home from "./Home";
 // import styles from './styles';
@@ -26,7 +26,12 @@ class Authentication extends Component {
         validLogin = res;
         console.log(validLogin);
         if(validLogin!=null){
-            Actions.Home();
+            if(this.state.password == JSON.parse(validLogin).password){
+                Actions.Home();
+            }
+            else{
+                Alert.alert('Incorrect Password.');
+            }
         }
         return res;
       }).catch((error) => {
