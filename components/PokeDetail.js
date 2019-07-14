@@ -10,7 +10,6 @@ const pokeMovesHeight = (heightF/3)-25;
 
 
 const PokeDetail = ({number,name,types,imgUrl,height,weight,moves})=>{
-    console.log(types);
     return (
         <View style={styles.pokeDetailContainer}>
             <View style={styles.imgContainer}>
@@ -37,15 +36,38 @@ const PokeDetail = ({number,name,types,imgUrl,height,weight,moves})=>{
                 </View>
             </View>
             <View style={styles.pokeMoves}>
+
                 <View style={styles.pokeMovesTitle}>
-                    <Text style={styles.pokeText}>Moves</Text>
+                    <View style={styles.pokeItem3} >
+                        <Text style={styles.pokeText2}>Move</Text>
+                    </View>
+                    <View style={styles.pokeItem3} >
+                        <Text style={styles.pokeText2}>Level learned at</Text>
+                    </View>
+                    <View style={styles.pokeItem3} >
+                        <Text style={styles.pokeText2}>learn method</Text>
+                    </View>
                 </View>
                 <View style={styles.pokeItem2}>
                 <FlatList
                     data={moves}
                     keyExtractor={item => item.move.name}
-                    renderItem={data => <Text>{data.item.move.name}</Text>}
-                    >
+                    renderItem={data => 
+                        {
+                            return <View style={styles.pokeStatistics3}>
+                                <View style={styles.pokeItem3}>
+                                    <Text adjustsFontSizeToFit={true} numberOfLines={1} minimumFontScale={0.01} style={styles.pokeText2}>{data.item.move.name}</Text>
+                                </View>
+                                <View style={styles.pokeItem3}>
+                                    <Text adjustsFontSizeToFit={true} numberOfLines={1} minimumFontScale={0.01} style={styles.pokeText2}>{data.item.version_group_details[0].level_learned_at}</Text>
+                                </View>
+                                <View style={styles.pokeItem3}>
+                                    <Text adjustsFontSizeToFit={true} numberOfLines={1} minimumFontScale={0.01} style={styles.pokeText2}>{data.item.version_group_details[0].move_learn_method.name}</Text>
+                                </View>
+                            </View>
+                        }
+                    }
+                >
                 </FlatList>
                 </View>
             </View>
@@ -79,6 +101,12 @@ const styles = StyleSheet.create({
         height:30,
         backgroundColor:'#435f8c',
     },
+    pokeStatistics3:{
+        alignSelf: 'center',
+        flexDirection:'row',
+        justifyContent:'space-around',
+        backgroundColor:'#435f8c',
+    },
     pokeStatistics2:{
         alignSelf: 'stretch',
         alignItems:'center',
@@ -109,14 +137,31 @@ const styles = StyleSheet.create({
         alignSelf:'stretch',
         
     },
+    pokeItem3:{
+        flex: 1,
+        // alignSelf: 'center',
+        padding:5,
+        // margin:3,
+        // alignContent:'center',
+        // justifyContent:'center',
+        borderBottomColor: 'white',
+        borderBottomWidth:1,
+    },
     pokeItem2:{
         flex: 1,
         alignSelf: 'stretch',
         padding:5,
-        margin:5
+        margin:5,
+        marginTop:0,
     },
     pokeMovesTitle:{
-        alignSelf: 'center',
+        alignSelf: 'stretch',
+        padding:5,
+        margin:5,
+        marginBottom:0,
+        flexDirection:'row',
+        flexGrow:0,
+        height:40
     },
     pokeName:{
         alignSelf: 'center',
@@ -127,6 +172,12 @@ const styles = StyleSheet.create({
     },
     pokeText:{
         color:'#fff'
+    },
+    pokeText2:{
+        color:'#fff',
+        textAlign:'center',
+        textAlignVertical:'center',
+        fontSize:12
     }
 });
 
