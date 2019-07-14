@@ -4,6 +4,8 @@ import { View, Image, StyleSheet, TouchableOpacity, FlatList,Text,Dimensions }  
 const widthF = Dimensions.get('window').width; //full width
 const heightF = Dimensions.get('window').height; //full height
 
+
+
 const imgContainerHeight = (heightF/3);
 const pokeStatisticsHeight = 25;
 const pokeMovesHeight = (heightF/3)-25;
