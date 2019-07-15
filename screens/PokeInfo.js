@@ -69,13 +69,13 @@ class PokeInfo extends React.Component{
                                       paddingBottom:0,
                                       paddingTop:0,
                                       borderWidth: 0,
-                                      color:'#fff',
+                                      
                                       justifyContent:'center',
                                       height:25,
                                       alignItems:'center'}}>
                                         <Text 
                                         style={{alignSelf: 'center',
-                                                justifyContent:'center',}}>
+                                                justifyContent:'center',color:'#fff'}}>
                                                 {obj.type.name}
                                         </Text>
                                     </View>

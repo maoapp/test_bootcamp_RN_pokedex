@@ -1,8 +1,6 @@
 import React, {Component} from 'react';
-import {Text, TextInput, TouchableOpacity, View, AsyncStorage, Alert} from 'react-native';
+import {Text, TextInput, TouchableOpacity, View, AsyncStorage, Alert,Image, StyleSheet} from 'react-native';
 import {Actions} from 'react-native-router-flux';
-import Home from "./Home";
-// import styles from './styles';
 
 class Authentication extends Component {
 
@@ -12,19 +10,25 @@ class Authentication extends Component {
   }
 
     userSignup() {
-        if (!this.state.username || !this.state.password) return;
+        if (!this.state.username || !this.state.password){
+          Alert.alert('Please fill your username and password');
+          return;
+        } 
         AsyncStorage.setItem(this.state.username, JSON.stringify({user:this.state.username,password:this.state.password}));
+        Alert.alert('User successfully created');
     }
 
    userLogin() {
 
-    if (!this.state.username || !this.state.password) return;
+    if (!this.state.username || !this.state.password){
+      Alert.alert('Please fill your username and password');
+      return;
+    }
 
      AsyncStorage.getItem(this.state.username).then(
         (response) => response
       ).then((res) => {
         validLogin = res;
-        console.log(validLogin);
         if(validLogin!=null){
             if(this.state.password == JSON.parse(validLogin).password){
                 Actions.Home();
@@ -41,9 +45,7 @@ class Authentication extends Component {
 
   render() {
     return (
-      <View style={{flex:1}}>
-        <Text style={{fontSize:25,textAlign:'center'}}> Welcome to my Pokedex App</Text>
-
+      <View style={{flex:1,backgroundColor:'#2a75bb'}}>
         <View style={{
           flex: 1,
           flexGrow: 5,
@@ -51,16 +53,17 @@ class Authentication extends Component {
           alignItems:'stretch',
           alignSelf:'center',
           justifyContent:'center',
-          width:250
+          width:250,
         }}>
-            <Text style={{fontSize:35,textAlign:'center',margin:15}}> LOGIN</Text>
+           <Image style={styles.authLogo} source={{uri:'https://www.freepnglogos.com/uploads/pokemon-go-png-logo/pokemon-go-apk-png-logo-9.png'}}></Image>
+            <Text style={styles.authHeader}> LOGIN</Text>
           <TextInput
             editable={true}
             onChangeText={(username) => this.setState({username})}
             placeholder='Username'
             ref='username'
             returnKeyType='next'
-            style={{margin:5,padding:5,borderWidth:1,textAlign:'center'}}
+            style={styles.outlinedText}
             value={this.state.username}
           />
 
@@ -71,21 +74,43 @@ class Authentication extends Component {
             ref='password'
             returnKeyType='next'
             secureTextEntry={true}
-            style={{margin:5,padding:5,borderWidth:1,textAlign:'center'}}
+            style={styles.outlinedText}
             value={this.state.password}
           />
 
-          <TouchableOpacity style={{backgroundColor:'white',padding:5,margin:5}}  onPress={this.userLogin.bind(this)}>
-            <Text style={{textAlign:'center'}}> Log In </Text>
+          <TouchableOpacity style={styles.outlinedButton}  onPress={this.userLogin.bind(this)}>
+            <Text style={{textAlign:'center',color:'#fff',fontWeight:'bold'}}> Log In </Text>
           </TouchableOpacity>
 
-          <TouchableOpacity style={{backgroundColor:'white',padding:5,margin:5}}  onPress={this.userSignup.bind(this)}>
-            <Text style={{textAlign:'center'}}> Sign Up </Text>
+          <TouchableOpacity style={style=styles.outlinedButton}  onPress={this.userSignup.bind(this)}>
+            <Text style={{textAlign:'center',color:'#fff',fontWeight:'bold'}}> Sign Up </Text>
           </TouchableOpacity>
         </View>
+        <Text style={styles.authFooter}> Welcome to my Pokedex App</Text>
       </View>
     );
   }
 }
+
+const styles = StyleSheet.create({
+  authLogo:{
+    margin:-45,width:150,height:150,alignSelf:'center'
+  },
+  authHeader:{fontSize:35,textAlign:'center',marginTop:45,color:'#fff'},
+  outlinedButton:{backgroundColor:'transparent',borderRadius:5,padding:8,margin:5,borderColor:'#fff',borderWidth:2},
+  outlinedText:{
+    margin: 5,
+    padding: 5,
+    borderWidth: 1,
+    borderColor: "#3c5aa6",
+    textAlign: "center",
+    borderRadius: 5,
+    backgroundColor: "#fff"
+  },
+  authFooter:{
+    fontSize:15,textAlign:'center',color:'#fff'
+  }
+});
+
 
 export default Authentication;

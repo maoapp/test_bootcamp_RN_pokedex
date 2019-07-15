@@ -6,15 +6,17 @@ import PokeInfo from "../screens/PokeInfo";
 const PokeRow = ({ name, imgUrl, number, navigation }) => {
   return (
     <TouchableOpacity 
-        style={{ backgroundColor: "transparent" }}
+        style={{ backgroundColor: "#3c5aa6",flex:1/2,margin:5,borderRadius:10 }}
         onPress={() => Actions.PokeInfo({pokemonId:number})}
     >
       <View style={styles.listItemContainer}>
         <View style={styles.listRowContainer}>
-          <Text style={styles.pokeItemNumber}>{number}</Text>
           <Image source={{ uri: imgUrl }} style={styles.pokeImage} />
         </View>
-        <Text style={styles.pokeItemHeader}>{name}</Text>
+       
+          <View style={styles.listRowContainer2}>
+            <Text style={styles.pokeItemHeader}>{name}</Text>
+          </View>
       </View>
     </TouchableOpacity>
   );
@@ -23,15 +25,20 @@ const PokeRow = ({ name, imgUrl, number, navigation }) => {
 
 const styles = StyleSheet.create({
   listItemContainer: {
-    borderStyle: "solid",
-    borderColor: "#eee",
-    borderBottomWidth: 2,
-    flexDirection: "row",
+    margin:5,
+    flexDirection: "column",
     justifyContent: "space-between",
     padding: 10
   },
   listRowContainer: {
-    flexDirection: "column"
+    flexDirection: "column",
+  },
+  listRowContainer2: {
+    flexDirection: "row",
+    justifyContent: "center",
+    borderColor: "#fff",
+    borderWidth:2,
+    borderRadius:5
   },
   pokeItemNumber: {
     color: "#000",
@@ -39,14 +46,18 @@ const styles = StyleSheet.create({
     alignSelf: "center"
   },
   pokeItemHeader: {
-    color: "#000",
-    fontSize: 24,
-    alignSelf: "center"
+    color: "#fff",
+    fontSize: 18,
+    alignSelf: "center",
   },
   pokeImage: {
-    backgroundColor: "transparent",
+    backgroundColor: "white",
     height: 70,
-    width: 70
+    width: 70,
+    borderWidth:1,
+    alignSelf:'center',
+    borderRadius:70,
+    marginBottom:5
   }
 });
 
