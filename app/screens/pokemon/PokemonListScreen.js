@@ -1,7 +1,7 @@
-import React, { Component } from 'react'
+import React, { Component } from 'react';
 
-import { View, ActivityIndicator, Dimensions, FlatList, StyleSheet, SafeAreaView, } from 'react-native'
-import { Card, Button, Header } from 'react-native-elements'
+import { View, ActivityIndicator, Dimensions, FlatList, StyleSheet, SafeAreaView, } from 'react-native';
+import { Card, Button, Header } from 'react-native-elements';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 // Component Service
@@ -18,6 +18,8 @@ class PokemonListScreen extends Component {
             setOnLoad: false,
             currentPage: 0
         }
+
+        this.viewMore = this.viewMore.bind(this);
     }
 
     componentDidMount() {
@@ -54,6 +56,12 @@ class PokemonListScreen extends Component {
         });
     }
 
+    viewMore(pokemon) {
+        this.props.navigation.navigate('PokemonDetail', {
+            pokemon: pokemon
+        });
+    }
+
     renderCard = (pokemon) => (
         <Card
             containerStyle={styles.cardContainer}
@@ -63,6 +71,7 @@ class PokemonListScreen extends Component {
 
             <Button
                 backgroundColor='#03A9F4'
+                onPress={() => this.viewMore(pokemon) }
                 buttonStyle={{ borderRadius: 0, marginLeft: 0, marginRight: 0, marginBottom: 0 }}
                 title='VIEW MORE' />
         </Card>
@@ -78,13 +87,9 @@ class PokemonListScreen extends Component {
                 />
             }
             type="clear"
-            onPress={this.goBack}
+            onPress={() => this.props.navigation.navigate("Login")}
         />
     )
-
-    goBack = () => {
-        this.props.navigation.navigate("Login");
-    }
 
     render() {
 
@@ -111,8 +116,8 @@ class PokemonListScreen extends Component {
                         onEndReached={({ distanceFromEnd }) => {
                             this.setState(
                                 {
-                                currentPage: this.state.currentPage + 1,
-                                isLoading: true
+                                    currentPage: this.state.currentPage + 1,
+                                    isLoading: true
                                 },
                                 () => {
                                     this.loadPokemons();

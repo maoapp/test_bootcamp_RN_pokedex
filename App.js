@@ -5,6 +5,7 @@ import RegisterScreen from './app/screens/auth/register/RegisterScreen';
 import HomeScreen from './app/screens/HomeScreen';
 import LoginScreen from './app/screens/auth/login/LoginScreen';
 import PokemonListScreen from './app/screens/pokemon/PokemonListScreen';
+import PokemonDetailScren from './app/screens/pokemon/PokemonDetailScreen';
 
 const AppNavigation = createStackNavigator({
 
@@ -31,6 +32,13 @@ const AppNavigation = createStackNavigator({
 
     PokemonList: {
         screen: PokemonListScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+    PokemonDetail: {
+        screen: PokemonDetailScren,
         navigationOptions: {
             header: null
         }
