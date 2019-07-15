@@ -1,33 +1,61 @@
 // React
 import React from 'react';
 // React Native
-import { ActivityIndicator, AsyncStorage, FlatList, Image, ScrollView, Text, TouchableHighlight, View } from 'react-native';
+import { ActivityIndicator, AsyncStorage, FlatList, View} from 'react-native';
 // React Native Elements
-import { Card, Header } from 'react-native-elements';
+import { Header } from 'react-native-elements';
 // CSS
 import styles from './PokeList.styles';
 // Icons
 import AntDesign from "react-native-vector-icons/AntDesign";
 // Services
 import firebaseAuth from '../../services/firebaseAuth/firebaseAuth';
+// Components
+import CardComponent from '../../components/CardComponent/CardComponent';
 
-class PokeList extends React.Component {
+class PokeList extends React.PureComponent {
 
   constructor(props) {
     super(props);
     this.state = {
-      list: null
+      pageNumber: 0,
+      list: []
     }
-    this.onEndReachedCalledDuringMomentum = true;
-    this.api = 'https://pokeapi.co/api/v2/pokemon';
+    this.loadingData = false;
     this.fireAuth = new firebaseAuth();
   }
 
-  async componentDidMount() {
-    const list = await fetch(this.api)
+  componentDidMount() {
+    this.makeRequest();
+  }
+
+  makeRequest = async () => {
+    this.loadingData = true;
+    const {pageNumber} = this.state;
+    const url = `https://pokeapi.co/api/v2/pokemon/?offset=${10 * pageNumber}&limit=10`;
+    const list = await fetch(url)
     .then(response => response.json())
     .catch(error => console.error(error));
-    this.setState({ list: list.results });
+    this.setState({list: this.state.list.concat(list.results)});
+    this.loadingData = false;
+  }
+
+  handleLoadMore = () => {
+    this.setState({pageNumber: this.state.pageNumber + 1}, () => {
+      this.makeRequest();
+    });
+  }
+
+  logout = async () => {
+    this.fireAuth.signOutUser();
+    await AsyncStorage.setItem('uid', '');
+    this.props.navigation.navigate('AuthLoading');
+  }
+  
+  onEndReached = () => {
+    if (!this.loadingData) {
+      this.handleLoadMore();
+    }
   }
 
   characterDetails =  async (item) => {
@@ -37,37 +65,9 @@ class PokeList extends React.Component {
     this.props.navigation.navigate('PokeDetails');
   }
 
-  logout = async () => {
-    this.fireAuth.signOutUser();
-    await AsyncStorage.setItem('uid', '');
-    this.props.navigation.navigate('AuthLoading');
-  }
-  
-  onEndReached = ({ distanceFromEnd }) => {
-    if(!this.onEndReachedCalledDuringMomentum){
-        this.fetchData();
-        this.onEndReachedCalledDuringMomentum = true;
-    }
-  }
-
   renderCharacter = (item, index) => {
-    console.log(item);
-    const imageUrl = `https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`
     return (
-      <View style={[styles.customListItem]}>
-        <TouchableHighlight style={{width: '100%'}}
-          underlayColor="#F8F8F8"
-          onPress={() => this.characterDetails(item)}>
-          <Card containerStyle={[styles.containerStyle]}
-            wrapperStyle={[styles.innerContainerStyle]}
-            /* title={item.name}
-            titleStyle={[styles.titleStyle]} */>
-              <Image source={{ uri: imageUrl }}
-              style={{width: 90, height: 90, margin: 0}} />
-              <Text style={{marginBottom: 10, marginTop: 0, color: '#ff0017', fontWeight: 'bold', fontSize: 15}}>{item.name}</Text>
-          </Card>
-        </TouchableHighlight>
-      </View>
+      <CardComponent item={item} index={index} onClick={(item) => this.characterDetails(item)}></CardComponent>
     );
   }
 
@@ -80,19 +80,18 @@ class PokeList extends React.Component {
           rightComponent={<AntDesign name="logout" color="#FFF" size={25}
           onPress={() => this.logout()}></AntDesign>}
         />
-        <ScrollView style={{width: '100%'}}>
-         {/* pagingEnabled={true}> */}
+        <View style={{width: '100%', height: 100, display: 'flex', flex: 1}}>
           {
             list ? <FlatList data={list}
+              bounces={false}
               numColumns={2}
-              keyExtractor={(item) => item.name}
+              keyExtractor={item => item.name}
               renderItem={({item, index}) => this.renderCharacter(item, index)}
               onEndReached={this.onEndReached.bind(this)}
-              onEndReachedThreshold={0.5}
-              onMomentumScrollBegin={() => { this.onEndReachedCalledDuringMomentum = false; }}/> :
+              onEndReachedThreshold={0.5} /> :
               <ActivityIndicator size="large"/>
           }
-        </ScrollView>
+          </View>
       </View>
     );
   }

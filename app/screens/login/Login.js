@@ -3,9 +3,10 @@ import React from 'react';
 // React Native
 import { Alert, AsyncStorage, Image, KeyboardAvoidingView, View } from 'react-native';
 // React Native Elements
-import { Button, Header, Input } from 'react-native-elements';
+import { Header, Input } from 'react-native-elements';
 // CSS
 import styles from './Login.styles';
+import globalStyles from '../../theme/styles';
 // Icons
 import Feather from "react-native-vector-icons/Feather";
 import AntDesign from "react-native-vector-icons/AntDesign";
@@ -13,6 +14,9 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import firebaseAuth from '../../services/firebaseAuth/firebaseAuth';
 // Helpers
 import { fieldChange, showHide, navigateTo } from '../../helpers/inputHelper/inputHelper';
+// Components
+import Logos from '../../components/Logos/Logos';
+import NavigateToButton from '../../components/NavigateToButton/NavigateToButton';
 
 class Login extends React.Component {
   constructor(props) {
@@ -56,15 +60,11 @@ class Login extends React.Component {
 
   render() {
     return (
-      <View style={[styles.container]}>
+      <View style={[globalStyles.container]}>
         <Header backgroundColor="#ff0017"
           centerComponent={{ text: 'Sign In', style: { color: '#fff', fontSize: 25 }, fontSize: 20, fontWeigth: 'bold' }}/>
-        <KeyboardAvoidingView style={[styles.container]} behavior="padding">
-          <Image
-            source={require('../../assets/pokedex_logo.png')}
-            style={{width: 90, height: 73}}
-          />
-          <Image style={[styles.pokedexText]} source={require('../../assets/pokedex-text.png')} />
+        <KeyboardAvoidingView style={[globalStyles.container]} behavior="padding">
+          <Logos/>
           <Input shake={true}
            containerStyle={styles.input}
            inputContainerStyle={{borderBottomWidth: 0}}
@@ -81,16 +81,8 @@ class Login extends React.Component {
             <Feather name="eye-off" color="#ff0017" size={25} onPress={() => this.showHidePassword('showPassword')}></Feather>}
             onChangeText={(text) => this.fieldChanged(text, 'password')}/>
           <View style={[styles.alignButtons]}>
-            <Button buttonStyle={[styles.button1]}
-              containerStyle={{borderRadius: 25, width: '45%'}}
-              icon={<AntDesign name="login" color="#FFF" size={25}></AntDesign>}
-              title=" Sign In"
-              onPress={() => this.loginUser()} underlayColor="#6B0A0A"/>
-            <Button buttonStyle={[styles.button1]}
-              containerStyle={{borderRadius: 25, width: '45%'}}
-              icon={<AntDesign name="adduser" color="#FFF" size={25}></AntDesign>}
-              title=" Sign Up"
-              onPress={() => navigateTo(this.props.navigation, 'Register')} underlayColor="#6B0A0A"/>
+            <NavigateToButton title="Sign In" name="login" onClick={() => this.loginUser()} />
+            <NavigateToButton title="Sign Up" name="adduser" onClick={() => navigateTo(this.props.navigation, 'Register')} />
           </View>
         </KeyboardAvoidingView>
       </View>

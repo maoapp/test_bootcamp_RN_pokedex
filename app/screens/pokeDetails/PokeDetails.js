@@ -12,6 +12,8 @@ import AntDesign from "react-native-vector-icons/AntDesign";
 import firebaseAuth from '../../services/firebaseAuth/firebaseAuth';
 // Helpers
 import { navigateTo } from '../../helpers/inputHelper/inputHelper';
+// Components
+import WeightHeight from '../../components/WeightHeight/WeightHeight';
 
 
 class PokeDetails extends React.Component {
@@ -25,16 +27,13 @@ class PokeDetails extends React.Component {
   }
 
   async componentDidMount() {
-    // const pokemon = await AsyncStorage.getItem('pokemonName');
     this.setState({pokemonName: await AsyncStorage.getItem('pokemonName')});
     const pokemon = await AsyncStorage.getItem('pokemonUrl');
-    /* const pokemonInfo = await  */fetch(`${pokemon}`).then(response => response.json())
+    fetch(`${pokemon}`).then(response => response.json())
     .then(data => {
       this.setState({ pokemonInfo: data });
     })
     .catch(error => console.error(error));
-    /* this.setState({ pokemonInfo: pokemonInfo.results });
-    console.log(this.state); */
   }
 
   logout = async () => {
@@ -77,26 +76,22 @@ class PokeDetails extends React.Component {
                   source={{uri: this.state.pokemonInfo.sprites.front_default}}
                   style={[styles.container, {width: 150, height: 150}]} />
               </View>
-              <Card containerStyle={[styles.containerStyle, {width: '100%'}]}
-                wrapperStyle={[styles.innerContainerStyle]}>
-                <View style={[styles.container2]}>
-                  <View style={[styles.weigthHeight]}>
-                    <Text style={[styles.smallData]}>Height:</Text>
-                    <Text>{this.state.pokemonInfo.height}</Text>
+              <View style={[styles.container]}>
+                <Card containerStyle={[styles.containerStyle, {width: '70%'}]}
+                  wrapperStyle={[styles.innerContainerStyle]}>
+                  <View style={[styles.container2]}>
+                    <WeightHeight name="Height" value={this.state.pokemonInfo.height} />
+                    <WeightHeight name="Weight" value={this.state.pokemonInfo.weight} />
                   </View>
-                  <View style={[styles.weigthHeight]}>
-                    <Text style={[styles.smallData]}>Weight:</Text>
-                    <Text>{this.state.pokemonInfo.weight}</Text>
+                  <View style={[styles.container3]}>
+                    <Text style={[styles.smallData]}>Types:</Text>
                   </View>
-                </View>
-                <View style={[styles.container3]}>
-                  <Text style={[styles.smallData]}>Types:</Text>
-                </View>
-                <FlatList data={this.state.pokemonInfo.types}
-                  numColumns={3}
-                  keyExtractor={(item, index) => `${item.type.name}-${index}`}
-                  renderItem={({item}) => this.renderTypes(item.type)}/>
-              </Card>
+                  <FlatList data={this.state.pokemonInfo.types}
+                    numColumns={3}
+                    keyExtractor={(item, index) => `${item.type.name}-${index}`}
+                    renderItem={({item}) => this.renderTypes(item.type)}/>
+                </Card>
+              </View>
               <View style={[styles.container]}>
                 <Text style={{marginTop: 25, fontSize: 25, fontWeight: 'bold', color: '#ff0017'}}>Available Moves</Text>
               </View>

@@ -49,9 +49,12 @@ const styles = StyleSheet.create({
     margin: 15
   },
   customListItem2: {
-    width: '50%',
+    /* width: '50%', */
+    marginTop: 0,
+    marginBottom: 20,
     justifyContent: 'center',
     alignItems: 'center',
+    flexDirection: 'column'
   },
   titleStyle: {
     color: '#ff0017',

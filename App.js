@@ -18,36 +18,6 @@ firebase.initializeApp(FIREBASE_CONFIG);
 
 KeepAwake();
 
-/* // working so far
-const appNavigator = createStackNavigator({
-  Login: {
-    screen: Login,
-    navigationOptions: {
-      header: null
-    }
-  },
-  Register: {
-    screen: Register,
-    navigationOptions: {
-      header: null
-    }
-  },
-  PokeList: {
-    screen: PokeList,
-    navigationOptions: {
-      header: null
-    }
-  },
-  PokeDetails: {
-    screen: PokeDetails,
-    navigationOptions: {
-      header: null
-    }
-  },
-});
-
-export default createAppContainer(appNavigator); */
-
 const authNavigator = createStackNavigator({
   Login: {
     screen: Login,

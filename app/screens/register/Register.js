@@ -3,16 +3,20 @@ import React from 'react';
 // React Native
 import { Alert, AsyncStorage, Image, KeyboardAvoidingView, View } from 'react-native';
 // React Native Elements
-import { Button, Header, Input } from 'react-native-elements';
+import { Header, Input } from 'react-native-elements';
 // CSS
 import styles from './Register.styles';
+import globalStyles from '../../theme/styles';
 // Icons
 import Feather from 'react-native-vector-icons/Feather';
 import AntDesign from 'react-native-vector-icons/AntDesign';
 // Services
 import firebaseAuth from '../../services/firebaseAuth/firebaseAuth';
-// Helpers /
+// Helpers
 import { fieldChange, showHide, navigateTo } from '../../helpers/inputHelper/inputHelper';
+// Components
+import Logos from '../../components/Logos/Logos';
+import NavigateToButton from '../../components/NavigateToButton/NavigateToButton';
 
 class Register extends React.Component {
 
@@ -70,15 +74,11 @@ class Register extends React.Component {
 
   render() {
     return (
-      <View style={[styles.container]}>
+      <View style={[globalStyles.container]}>
         <Header backgroundColor="#ff0017"
           centerComponent={{ text: 'Sign Up', style: { color: '#fff', fontSize: 25 } }}/>
         <KeyboardAvoidingView style={[styles.container]} behavior="padding">
-          <Image
-            source={require('../../assets/pokedex_logo.png')}
-            style={{width: 90, height: 73}}
-          />
-          <Image style={[styles.pokedexText]} source={require('../../assets/pokedex-text.png')} />
+          <Logos/>
           <Input shake={true}
           containerStyle={styles.input}
           inputContainerStyle={{borderBottomWidth: 0}}
@@ -104,16 +104,8 @@ class Register extends React.Component {
             <Feather name="eye-off" color="#ff0017" size={25} onPress={() => this.showHidePassword('showRepeatPassword')}></Feather>}
             onChangeText={(text) => this.fieldChanged(text, 'repeatPassword')}/>
           <View style={[styles.alignButtons]}>
-            <Button buttonStyle={[styles.button1]}
-              containerStyle={{borderRadius: 25, width: '45%'}}
-              icon={<AntDesign name="adduser" color="#FFF" size={25}></AntDesign>}
-              title=" Sign Up"
-              onPress={() => this.createUser()} underlayColor="#6B0A0A"/>
-            <Button buttonStyle={[styles.button1]}
-              containerStyle={{borderRadius: 25, width: '45%'}}
-              icon={<AntDesign name="login" color="#FFF" size={25}></AntDesign>}
-              title=" Sign In"
-              onPress={() => navigateTo(this.props.navigation, 'Login')} underlayColor="#6B0A0A"/>
+            <NavigateToButton title="Sign Up" name="adduser" onClick={() => this.createUser()} />
+            <NavigateToButton title="Sign In" name="login" onClick={() => navigateTo(this.props.navigation, 'Login')} />
           </View>
         </KeyboardAvoidingView>
       </View>
