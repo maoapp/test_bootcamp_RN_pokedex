@@ -91,7 +91,7 @@ class RegisterScreen extends Component {
                 validationError: 'There is already a user with this name, please try again.'
             });
         } else {
-            // this.props.navigation.navigate('Register');
+            this.props.navigation.navigate('PokemonList');
         }
     }
 

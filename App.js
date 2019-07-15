@@ -4,6 +4,7 @@ import { createStackNavigator, createAppContainer } from 'react-navigation';
 import RegisterScreen from './app/screens/auth/register/RegisterScreen';
 import HomeScreen from './app/screens/HomeScreen';
 import LoginScreen from './app/screens/auth/login/LoginScreen';
+import PokemonListScreen from './app/screens/pokemon/PokemonListScreen';
 
 const AppNavigation = createStackNavigator({
 
@@ -23,6 +24,13 @@ const AppNavigation = createStackNavigator({
 
     Register: {
         screen: RegisterScreen,
+        navigationOptions: {
+            header: null
+        }
+    },
+
+    PokemonList: {
+        screen: PokemonListScreen,
         navigationOptions: {
             header: null
         }

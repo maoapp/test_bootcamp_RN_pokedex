@@ -75,7 +75,7 @@ class LoginScreen extends Component {
                         validationError: 'The credentials do not match with our records.'
                     });
                 } else {
-                    this.props.navigation.navigate('Register');
+                    this.props.navigation.navigate('PokemonList');
                 }
 
             });
