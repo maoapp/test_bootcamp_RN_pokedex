@@ -5,7 +5,6 @@ import { Alert, AsyncStorage, Image, KeyboardAvoidingView, View } from 'react-na
 // React Native Elements
 import { Header, Input } from 'react-native-elements';
 // CSS
-import styles from './Login.styles';
 import globalStyles from '../../theme/styles';
 // Icons
 import Feather from "react-native-vector-icons/Feather";
@@ -66,13 +65,13 @@ class Login extends React.Component {
         <KeyboardAvoidingView style={[globalStyles.container]} behavior="padding">
           <Logos/>
           <Input shake={true}
-           containerStyle={styles.input}
+           containerStyle={globalStyles.input}
            inputContainerStyle={{borderBottomWidth: 0}}
            placeholder="Username"
            leftIcon={<AntDesign name="user" color="#ff0017" size={25}></AntDesign>}
            onChangeText={(text) => this.fieldChanged(text, 'userName')}/>
           <Input shake={true}
-            containerStyle={styles.input}
+            containerStyle={globalStyles.input}
             inputContainerStyle={{borderBottomWidth: 0}}
             placeholder="Password"
             secureTextEntry={this.state.showPassword}
@@ -80,7 +79,7 @@ class Login extends React.Component {
             rightIcon={this.state.showPassword ? <Feather name="eye" color="#ff0017" size={25} onPress={() => this.showHidePassword('showPassword')}></Feather> :
             <Feather name="eye-off" color="#ff0017" size={25} onPress={() => this.showHidePassword('showPassword')}></Feather>}
             onChangeText={(text) => this.fieldChanged(text, 'password')}/>
-          <View style={[styles.alignButtons]}>
+          <View style={[globalStyles.alignButtons]}>
             <NavigateToButton title="Sign In" name="login" onClick={() => this.loginUser()} />
             <NavigateToButton title="Sign Up" name="adduser" onClick={() => navigateTo(this.props.navigation, 'Register')} />
           </View>

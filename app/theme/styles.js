@@ -32,16 +32,7 @@ const styles = StyleSheet.create({
     padding: 0,
     width: '100%',
     borderRadius: 25,
-    borderColor: '#ff0017',
-    justifyContent: 'center',
-    alignItems: 'center'
-  },
-  innerCardStyle: {
-    margin: 0,
-    padding: 0,
-    width: '100%',
-    borderRadius: 25,
-    borderColor: '#ff0017',
+    borderColor: '#2a88b7',
     justifyContent: 'center',
     alignItems: 'center'
   },
@@ -63,6 +54,37 @@ const styles = StyleSheet.create({
     color: '#ff0017',
     fontWeight: 'bold',
     fontSize: 15
+  },
+  input: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor:  '#ff0017',
+    backgroundColor: 'white',
+    height: 40,
+    width: '80%',
+    margin: 5
+  },
+  alignButtons: {
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    flexDirection: 'row',
+    margin: 15
+  },
+  typesListItem: {
+    marginTop: 0,
+    marginRight: 15,
+    marginLeft: 15,
+    marginBottom: 20,
+    justifyContent: 'center',
+    alignItems: 'center'
+  },
+  detailsContainer: {
+    margin: 4,
+    flex: 2,
+    justifyContent: 'center',
+    alignItems: 'center'
   }
 });
 

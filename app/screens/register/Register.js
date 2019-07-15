@@ -5,7 +5,6 @@ import { Alert, AsyncStorage, Image, KeyboardAvoidingView, View } from 'react-na
 // React Native Elements
 import { Header, Input } from 'react-native-elements';
 // CSS
-import styles from './Register.styles';
 import globalStyles from '../../theme/styles';
 // Icons
 import Feather from 'react-native-vector-icons/Feather';
@@ -77,16 +76,16 @@ class Register extends React.Component {
       <View style={[globalStyles.container]}>
         <Header backgroundColor="#ff0017"
           centerComponent={{ text: 'Sign Up', style: { color: '#fff', fontSize: 25 } }}/>
-        <KeyboardAvoidingView style={[styles.container]} behavior="padding">
+        <KeyboardAvoidingView style={[globalStyles.container]} behavior="padding">
           <Logos/>
           <Input shake={true}
-          containerStyle={styles.input}
+          containerStyle={globalStyles.input}
           inputContainerStyle={{borderBottomWidth: 0}}
           placeholder="Username"
           leftIcon={<AntDesign name="user" color="#ff0017" size={25}></AntDesign>}
           onChangeText={(text) => this.fieldChanged(text, 'userName')}/>
           <Input shake={true}
-            containerStyle={styles.input}
+            containerStyle={globalStyles.input}
             inputContainerStyle={{borderBottomWidth: 0}}
             placeholder="Password"
             secureTextEntry={this.state.showPassword}
@@ -95,7 +94,7 @@ class Register extends React.Component {
             <Feather name="eye-off" color="#ff0017" size={25} onPress={() => this.showHidePassword('showPassword')}></Feather>}
             onChangeText={(text) => this.fieldChanged(text, 'password')}/>
           <Input shake={true}
-            containerStyle={styles.input}
+            containerStyle={globalStyles.input}
             inputContainerStyle={{borderBottomWidth: 0}}
             placeholder="Confirm Password"
             secureTextEntry={this.state.showRepeatPassword}
@@ -103,7 +102,7 @@ class Register extends React.Component {
             rightIcon={this.state.showRepeatPassword ? <Feather name="eye" color="#ff0017" size={25} onPress={() => this.showHidePassword('showRepeatPassword')}></Feather> :
             <Feather name="eye-off" color="#ff0017" size={25} onPress={() => this.showHidePassword('showRepeatPassword')}></Feather>}
             onChangeText={(text) => this.fieldChanged(text, 'repeatPassword')}/>
-          <View style={[styles.alignButtons]}>
+          <View style={[globalStyles.alignButtons]}>
             <NavigateToButton title="Sign Up" name="adduser" onClick={() => this.createUser()} />
             <NavigateToButton title="Sign In" name="login" onClick={() => navigateTo(this.props.navigation, 'Login')} />
           </View>

@@ -4,6 +4,8 @@ import React from 'react';
 import { Image, Text, TouchableHighlight, View} from 'react-native';
 // React Native Elements
 import { Card } from 'react-native-elements';
+// Expo
+import { LinearGradient } from 'expo-linear-gradient';
 // CSS
 import globalStyles from '../../theme/styles';
 
@@ -20,10 +22,13 @@ class  CardComponent extends React.PureComponent {
           underlayColor="#F8F8F8"
           onPress={() => this.props.onClick(this.props.item)}>
           <Card containerStyle={[globalStyles.cardStyle]}
-            wrapperStyle={[globalStyles.innerCardStyle]}>
+            wrapperStyle={[globalStyles.cardStyle]}>
+              <LinearGradient style={[globalStyles.cardWrapper, {borderRadius: 25,}]}
+                colors={['#2a88b7', '#74cfcf', '#20d3e0']}>
               <Image source={{ uri: imageUrl }}
               style={{width: 100, height: 100, margin: 0}} />
-              <Text style={{marginBottom: 10, marginTop: 0, color: '#ff0017', fontWeight: 'bold', fontSize: 15}}>{this.props.item.name}</Text>
+              <Text style={{marginBottom: 10, marginTop: 0, color: '#fff', fontWeight: 'bold', fontSize: 15}}>{this.props.item.name}</Text>
+              </LinearGradient>
           </Card>
         </TouchableHighlight>
       </View>

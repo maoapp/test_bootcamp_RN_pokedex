@@ -4,8 +4,10 @@ import React from 'react';
 import { ActivityIndicator, AsyncStorage, FlatList, Image, ScrollView, Text, View  } from 'react-native';
 // React Native Elements
 import { Card, Header } from 'react-native-elements';
+// Expo
+import { LinearGradient } from 'expo-linear-gradient';
 // CSS
-import styles from './PokeDetails.styles';
+import globalStyles from '../../theme/styles';
 // Icons
 import AntDesign from "react-native-vector-icons/AntDesign";
 // Services
@@ -23,45 +25,43 @@ class PokeDetails extends React.Component {
       pokemonName: '',
       pokemonInfo: null
     }
+    this.isLoadingData = false;
     this.fireAuth = new firebaseAuth();
   }
 
   async componentDidMount() {
+    this.isLoadingData = true;
     this.setState({pokemonName: await AsyncStorage.getItem('pokemonName')});
     const pokemon = await AsyncStorage.getItem('pokemonUrl');
     fetch(`${pokemon}`).then(response => response.json())
     .then(data => {
       this.setState({ pokemonInfo: data });
+      this.isLoadingData = false;
     })
     .catch(error => console.error(error));
   }
 
   logout = async () => {
-    this.fireAuth.signOutUser();
-    await AsyncStorage.setItem('uid', '');
-    this.props.navigation.navigate('AuthLoading');
+    if (!this.isLoadingData) {
+      this.fireAuth.signOutUser();
+      await AsyncStorage.setItem('uid', '');
+      this.props.navigation.navigate('AuthLoading');
+    }
   }
 
-  renderMoves = (moves) => {
+  renderListItems = (characteristic, style, colors) => {
     return (
-      <View style={[styles.customListItem]}>
-        <Text>{moves.name}</Text>
-      </View>
-    );
-  }
-
-  renderTypes = (types) => {
-    return (
-      <View style={[styles.customListItem2]}>
-        <Text>{types.name}</Text>
-      </View>
+      <LinearGradient style={[style, {borderRadius: 10}]}
+        colors={colors}>
+        <Text style={{margin: 5, padding: 5, textAlign: 'center', color: '#fff', fontWeight: 'bold'}}>{characteristic.name}</Text>
+      </LinearGradient>
     );
   }
 
   render() {
     return (
       this.state.pokemonInfo ?
-        <View style={[styles.container]}>
+        <View style={[globalStyles.container]}>
           <Header backgroundColor="#ff0017"
             leftComponent={<AntDesign name="arrowleft" color="#FFF" size={25}
             onPress={() => navigateTo(this.props.navigation, 'PokeList')}></AntDesign>}
@@ -71,38 +71,38 @@ class PokeDetails extends React.Component {
           />
           <ScrollView style={{width: '100%'}}>
             <View>
-              <View style={[styles.container]}>
+              <View style={[globalStyles.container]}>
                 <Image
                   source={{uri: this.state.pokemonInfo.sprites.front_default}}
-                  style={[styles.container, {width: 150, height: 150}]} />
+                  style={[globalStyles.container, {width: 160, height: 160}]} />
               </View>
-              <View style={[styles.container]}>
-                <Card containerStyle={[styles.containerStyle, {width: '70%'}]}
-                  wrapperStyle={[styles.innerContainerStyle]}>
-                  <View style={[styles.container2]}>
+              <View style={[globalStyles.container]}>
+                <Card containerStyle={[globalStyles.cardStyle, {width: '70%'}]}
+                  wrapperStyle={[globalStyles.cardStyle]}>
+                  <View style={[globalStyles.detailsContainer, {flexDirection: 'row'}]}>
                     <WeightHeight name="Height" value={this.state.pokemonInfo.height} />
                     <WeightHeight name="Weight" value={this.state.pokemonInfo.weight} />
                   </View>
-                  <View style={[styles.container3]}>
-                    <Text style={[styles.smallData]}>Types:</Text>
+                  <View style={[globalStyles.detailsContainer]}>
+                    <Text style={[globalStyles.weigthHeightTitle]}>Types:</Text>
                   </View>
                   <FlatList data={this.state.pokemonInfo.types}
                     numColumns={3}
                     keyExtractor={(item, index) => `${item.type.name}-${index}`}
-                    renderItem={({item}) => this.renderTypes(item.type)}/>
+                    renderItem={({item}) => this.renderListItems(item.type, globalStyles.typesListItem, ['#e32716', '#e83d2a', '#e08175', '#e83d2a', '#e32716'])}/>
                 </Card>
               </View>
-              <View style={[styles.container]}>
+              <View style={[globalStyles.container]}>
                 <Text style={{marginTop: 25, fontSize: 25, fontWeight: 'bold', color: '#ff0017'}}>Available Moves</Text>
               </View>
               <FlatList data={this.state.pokemonInfo.moves}
                 numColumns={2}
                 keyExtractor={(item, index) => `${item.move.name}-${index}`}
-                renderItem={({item}) => this.renderMoves(item.move)}/>
+                renderItem={({item}) => this.renderListItems(item.move, globalStyles.cardWrapper, ['#2a88b7', '#74cfcf', '#12bbc7', '#74cfcf', '#2a88b7'])}/>
             </View>
           </ScrollView>
         </View> : 
-        <View style={[styles.container]}>
+        <View style={[globalStyles.container]}>
           <Header backgroundColor="#ff0017"
             leftComponent={<AntDesign name="arrowleft" color="#FFF" size={25}
             onPress={() => navigateTo(this.props.navigation, 'PokeList')}></AntDesign>}
@@ -110,7 +110,7 @@ class PokeDetails extends React.Component {
             rightComponent={<AntDesign name="logout" color="#FFF" size={25}
             onPress={() => this.logout()}></AntDesign>}
           />
-          <ActivityIndicator size="large" style={[styles.container]}/>
+          <ActivityIndicator size="large" style={[globalStyles.container]}/>
         </View>
     );
   }

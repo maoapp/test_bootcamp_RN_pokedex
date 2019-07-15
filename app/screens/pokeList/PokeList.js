@@ -5,7 +5,7 @@ import { ActivityIndicator, AsyncStorage, FlatList, View} from 'react-native';
 // React Native Elements
 import { Header } from 'react-native-elements';
 // CSS
-import styles from './PokeList.styles';
+import globalStyles from '../../theme/styles';
 // Icons
 import AntDesign from "react-native-vector-icons/AntDesign";
 // Services
@@ -21,7 +21,7 @@ class PokeList extends React.PureComponent {
       pageNumber: 0,
       list: []
     }
-    this.loadingData = false;
+    this.isLoadingData = false;
     this.fireAuth = new firebaseAuth();
   }
 
@@ -30,14 +30,14 @@ class PokeList extends React.PureComponent {
   }
 
   makeRequest = async () => {
-    this.loadingData = true;
+    this.isLoadingData = true;
     const {pageNumber} = this.state;
     const url = `https://pokeapi.co/api/v2/pokemon/?offset=${10 * pageNumber}&limit=10`;
     const list = await fetch(url)
     .then(response => response.json())
     .catch(error => console.error(error));
-    this.setState({list: this.state.list.concat(list.results)});
-    this.loadingData = false;
+    this.setState({list: [...this.state.list, ...list.results]});
+    this.isLoadingData = false;
   }
 
   handleLoadMore = () => {
@@ -47,13 +47,15 @@ class PokeList extends React.PureComponent {
   }
 
   logout = async () => {
-    this.fireAuth.signOutUser();
-    await AsyncStorage.setItem('uid', '');
-    this.props.navigation.navigate('AuthLoading');
+    if (!this.isLoadingData) {
+      await AsyncStorage.setItem('uid', '');
+      this.fireAuth.signOutUser();
+      this.props.navigation.navigate('AuthLoading');
+    }
   }
   
   onEndReached = () => {
-    if (!this.loadingData) {
+    if (!this.isLoadingData) {
       this.handleLoadMore();
     }
   }
@@ -74,7 +76,7 @@ class PokeList extends React.PureComponent {
   render() {
     const { list } = this.state;
     return (
-      <View style={[styles.container]}>
+      <View style={[globalStyles.container]}>
         <Header backgroundColor="#ff0017"
           centerComponent={{ text: 'Pokémon List', style: { color: '#fff', fontSize: 25 } }}
           rightComponent={<AntDesign name="logout" color="#FFF" size={25}
@@ -91,6 +93,7 @@ class PokeList extends React.PureComponent {
               onEndReachedThreshold={0.5} /> :
               <ActivityIndicator size="large"/>
           }
+          { !this.isLoadingData ? <ActivityIndicator size="large"/> : null }
           </View>
       </View>
     );
