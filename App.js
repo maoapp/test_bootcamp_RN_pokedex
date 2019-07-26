@@ -1,19 +1,19 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { Provider } from 'react-redux';
+import { createStore, applyMiddleware } from 'redux';
+import { createAppContainer } from 'react-navigation';
+import thunk from 'redux-thunk';
+import AppNavigator from './app/AppNavigator';
 
-export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-    </View>
-  );
-}
+import AppReducer from './app/reducers';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+const AppContainer = createAppContainer(AppNavigator);
+const store = createStore(AppReducer, applyMiddleware(thunk));
+
+const App = () => (
+  <Provider store={store}>
+    <AppContainer />
+  </Provider>  
+)
+
+export default App;
