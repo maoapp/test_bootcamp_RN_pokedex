@@ -1,8 +1,9 @@
 import React from 'react';
 import { View, ActivityIndicator, StyleSheet } from 'react-native';
 
-import ListComponent from '../components/pokemonList/PokemonList';
+import PokemonList from '../components/pokemonList/PokemonList';
 import TopBar from '../components/TopBar/TopBar';
+import ErrorState from '../components/errorState/ErrorState';
 
 class PokemonListScreen extends React.Component {
   constructor() {
@@ -23,21 +24,28 @@ class PokemonListScreen extends React.Component {
 
   onSelectPokemon(id) {
     const { navigation } = this.props;
-    console.log(id, 'id')
 
     navigation.navigate('Detail', { id });
   }
 
   render() {
-    const { pokemons: { data }, navigation } = this.props;
+    const { pokemons: { data, isloading, succesful, error }, navigation } = this.props;
 
-    let content = <View style={styles.container}><ActivityIndicator size="large" color="tomato" /></View>;
+    let content = null;
 
-    if(data.length) {
+    if(isloading) {
+      content = <View style={styles.container}><ActivityIndicator size="large" color="tomato" /></View>;
+    }
+
+    if(error) {
+      content = <View style={styles.container}><ErrorState/></View>
+    }
+
+    if(succesful) {
       content = (
         <React.Fragment>
           <TopBar title="Pokemons" goBack={() => navigation.goBack()}/>
-          <ListComponent pokemons={data} onSelectPokemon={this.onSelectPokemon}/>
+          <PokemonList pokemons={data} onSelectPokemon={this.onSelectPokemon}/>
         </React.Fragment>
       )
     }
