@@ -8,7 +8,8 @@
 
 1. Install jest and jest-expo (npm install jest --save-dev && npm install jest-expo --save-dev).
 2. Install Enzyme and enzyme-adapter-react-16 (npm install enzyme --save-dev && npm install enzyme-adapter-react-16 --save-dev).
-3. Add this object in package.json  ```"preset": "jest-expo",
+3. Install redux-mock-store npm install redux-mock-store --save-dev)
+4. Add this object in package.json  ```"preset": "jest-expo",
     "coveragePathIgnorePatterns": [
       "/app/test/",
       "/app/constants/",
@@ -29,7 +30,7 @@
       "<rootDir>/app/test/setup.js"
     ] ```
 
-4. Define the testing plan and project structure for it
+5. Define the testing plan and project structure for it
  
 
  # MOCKS DATA
