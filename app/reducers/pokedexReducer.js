@@ -1,8 +1,4 @@
 import {
-  LOGIN_USER_SUCCESSFUL,
-  LOGIN_USER_FAILURE,
-  LOGOUT_USER,
-  REGISTER_USER,
   REQUEST_POKEMONS,
   REQUEST_POKEMONS_FAILURE,
   REQUEST_POKEMONS_SUCCESSFUL,
@@ -38,44 +34,6 @@ const initialState = {
 
 const pokedexReducer = (state = initialState, action) => {
   switch(action.type) {
-    case REGISTER_USER: {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          ...action.payload
-        }
-      }
-    };
-    case LOGIN_USER_SUCCESSFUL: {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLogged: true,
-          userInvalid: false
-        }
-      }
-    }
-    case LOGIN_USER_FAILURE: {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLogged: false,
-          userInvalid: true
-        }
-      }
-    }
-    case LOGOUT_USER: {
-      return {
-        ...state,
-        user: {
-          ...state.user,
-          isLogged: false
-        }
-      }
-    }
     case REQUEST_POKEMONS:
       return { 
         ...state, 

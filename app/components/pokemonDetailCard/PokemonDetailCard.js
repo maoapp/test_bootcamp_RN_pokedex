@@ -5,8 +5,6 @@ import { View, Text, StyleSheet, Image, ScrollView } from 'react-native';
 // @constants
 import { TYPES_COLORS } from '../../constants/constants';
 
-console.log(TYPES_COLORS, 'tipos', TYPES_COLORS['poison']);
-
 const PokemonDetailCard = ({name, sprites, height, types, weight, moves}) => (
  <ScrollView contentContainerStyle={[styles.container, {backgroundColor: TYPES_COLORS[types[0].type.name]}]}>
   <Text style={styles.title}>{name}</Text>
@@ -26,7 +24,7 @@ const PokemonDetailCard = ({name, sprites, height, types, weight, moves}) => (
    <View style={{flexDirection: 'row', alignItems: 'center'}}>
     <Text style={styles.label}>Moves:</Text>
     <ScrollView horizontal>
-      {moves.map(move => <View style={{marginRight: 5, borderRadius: 6, borderColor: 'white', borderWidth: 0.5, padding: 4}}>
+      {moves.map(move => <View key={move.move.name} style={{marginRight: 5, borderRadius: 6, borderColor: 'white', borderWidth: 0.5, padding: 4}}>
         <Text style={styles.data}>{move.move.name}</Text>
       </View>)}
     </ScrollView>  

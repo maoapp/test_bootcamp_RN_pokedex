@@ -8,6 +8,7 @@ import { TYPES_COLORS } from '../constants/constants';
 // @components
 import PokemonDetailCard from '../components/pokemonDetailCard/PokemonDetailCard';
 import TopBar from '../components/TopBar/TopBar';
+import ErrorState from '../components/errorState/ErrorState';
 
 class PokemonDetail extends React.Component {
   constructor() {
@@ -31,14 +32,19 @@ class PokemonDetail extends React.Component {
   }
 
   render() {
-    const { pokemonDetail, navigation } = this.props;
-    const { data } = pokemonDetail;
-
-   
+    const { pokemonDetail: {  data, isloading, succesful, error } } = this.props;
     
-    let content = <View style={styles.container}><ActivityIndicator size="large" color="tomato" /></View>;
+    let content = null;
 
-    if(data) {
+    if(isloading) {
+      content = <View style={styles.container}><ActivityIndicator size="large" color="tomato" /></View>;
+    }
+
+    if(error) {
+      content = <ErrorState />
+    }
+
+    if(succesful) {
       content = (
         <React.Fragment>
           <TopBar title="Pokemon Detail" goBack={this.goBack} backgroundColor={TYPES_COLORS[data.types[0].type.name]}/>

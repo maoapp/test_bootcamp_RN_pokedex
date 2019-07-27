@@ -1,22 +1,75 @@
-# Final Test
-Pokedex
+# steps to run the project
 
-# setup
-Run yarn install in order to setup the project
+1. git clone 
+2. run npm install
+3. run npm start in the root
 
-# Resources 
-https://pokeapi.co
-https://facebook.github.io/react-native/
+# Steps to config test enviorment
 
+1. Install jest and jest-expo (npm install jest --save-dev && npm install jest-expo --save-dev).
+2. Install Enzyme and enzyme-adapter-react-16 (npm install enzyme --save-dev && npm install enzyme-adapter-react-16 --save-dev).
+3. Add this object in package.json  ```"preset": "jest-expo",
+    "coveragePathIgnorePatterns": [
+      "/app/test/",
+      "/app/constants/",
+      "index.js",
+      "/app/AppNavigator.js",
+      "/app/config/Routes.js",
+      "/app/store.js"
+    ],
+    "collectCoverageFrom": [
+      "app/**/*.{js,jsx}"
+    ],
+     "coverageThreshold": {
+      "global": {
+        "statements": 40
+      }
+    },
+    "setupFilesAfterEnv": [
+      "<rootDir>/app/test/setup.js"
+    ] ```
 
-# AC
-1. The user should be to able to signup and login in the app with the fields email and password.
-2. The user should be to able to see a list of pokemons in a scrollview(use pagination by 10), with the next information: Name and Picture.
-3. The user should be to able to see the detail of each pokemon when the pokemon is tapped in the list, this detail should has the next information: Name, picture, Type, height, weight and Available moves.
+4. Define the testing plan and project structure for it
+ 
 
-# plus
-- handle the session when the user close the app.
+ # MOCKS DATA
 
-# Delivery
+ - pokemons = [
+  {
+    name: 'bulbasaur',
+    url: 'https://pokeapi.co/api/v2/pokemon/1/'
+  },
+  {
+    name: 'charmander',
+    url: "https://pokeapi.co/api/v2/pokemon/4/"
+  }
+];
 
-You should do a fork of this repo and create a pull request with your solution.
+ - pokemonDetail = {
+    name: "bulbasaur",
+    sprites: {
+      front_default: "https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/1.png"
+    },
+    height: 115,
+    weight: 200,
+    types: [
+      {
+        type: {
+          name: "water"
+        }
+      }
+    ],
+    moves: [
+      {
+        move: {
+          name: "water"
+        }
+      },
+      {
+        move: {
+          name: "swords-dance"
+        }
+      }
+    ]
+  }
+

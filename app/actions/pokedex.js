@@ -79,15 +79,12 @@ const fetchPokemonDetail = index => dispatch => {
 	const { POKEMON_DETAIL } = ENDPOINTS;
   const url = `${API_URL}/${POKEMON_DETAIL}`;
   const urlApi = url.replace('{index}', index);
-  console.log(url, 'call', index, urlApi)
 
 	dispatch(pokemonDetailsRequest());
 	axios.get(urlApi)
 		.then(res => {
       const pokemonDetail = res.data;
       dispatch(pokemonDetailsRequestSuccesful(pokemonDetail))
-
-      console.log(pokemonDetail, 'respuesta')
     })
 		.catch(() => dispatch(pokemonDetailsRequestFailure()));
 };

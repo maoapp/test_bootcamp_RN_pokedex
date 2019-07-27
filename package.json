@@ -6,7 +6,8 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest"
+    "test": "jest",
+    "coverage": "jest --verbose --coverage && open ./coverage/lcov-report/index.html"
   },
   "dependencies": {
     "axios": "^0.18.0",
@@ -30,9 +31,22 @@
   },
   "jest": {
     "preset": "jest-expo",
-    "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|sentry-expo|native-base)"
+    "coveragePathIgnorePatterns": [
+      "/app/test/",
+      "/app/constants/",
+      "index.js",
+      "/app/AppNavigator.js",
+      "/app/config/Routes.js",
+      "/app/store.js"
     ],
+    "collectCoverageFrom": [
+      "app/**/*.{js,jsx}"
+    ],
+    "coverageThreshold": {
+      "global": {
+        "statements": 60
+      }
+    },
     "setupFilesAfterEnv": [
       "<rootDir>/app/test/setup.js"
     ]
